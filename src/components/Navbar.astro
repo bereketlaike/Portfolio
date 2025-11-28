@@ -46,7 +46,7 @@ const languages = [
     root.classList.add("dark");
   }
 
-  toggleBtn.addEventListener("click", () => {
+  toggleBtn?.addEventListener("click", () => {
     root.classList.toggle("dark");
     localStorage.setItem("theme",
       root.classList.contains("dark") ? "dark" : "light"
@@ -54,7 +54,9 @@ const languages = [
   });
 
   // LANGUAGE SWITCH
-  const langSwitch = document.getElementById("lang-switch");
+  const langSwitch = document.getElementById("lang-switch") as HTMLSelectElement;
+
+  if(!langSwitch) return;
 
   // Load saved language
   langSwitch.value = localStorage.getItem("lang") || "en";
