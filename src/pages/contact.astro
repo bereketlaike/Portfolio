@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+
+<Layout title={`Contact | ${site.name}`} description="Me contacter pour missions data engineering et analytics.">
+	<section class="py-6">
+		<h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Contact</h1>
+		<p class="mt-3 max-w-3xl text-base leading-relaxed text-gray-600 dark:text-gray-300">
+			Un besoin data (pipelines, analytics, dashboards, qualite) ou une question? Ecris-moi.
+		</p>
+	</section>
+
+	<section class="py-8">
+		<div class="grid gap-5 md:grid-cols-3">
+			<a
+				class="rounded-2xl border border-gray-200/70 bg-white/70 p-6 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-gray-950/50"
+				href={`mailto:${site.email}`}
+			>
+				<p class="text-xs font-semibold text-gray-500 dark:text-gray-400">Email</p>
+				<p class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">{site.email}</p>
+				<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Reponse rapide, sujet clair.</p>
+			</a>
+
+			<a
+				class="rounded-2xl border border-gray-200/70 bg-white/70 p-6 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-gray-950/50"
+				href={site.links.linkedin}
+				target="_blank"
+				rel="noreferrer"
+			>
+				<p class="text-xs font-semibold text-gray-500 dark:text-gray-400">LinkedIn</p>
+				<p class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">Profil</p>
+				<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Reseau, parcours, et projets.</p>
+			</a>
+
+			<a
+				class="rounded-2xl border border-gray-200/70 bg-white/70 p-6 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-gray-950/50"
+				href={site.links.github}
+				target="_blank"
+				rel="noreferrer"
+			>
+				<p class="text-xs font-semibold text-gray-500 dark:text-gray-400">GitHub</p>
+				<p class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">Repos</p>
+				<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Code, outils, et demos.</p>
+			</a>
+		</div>
+	</section>
+
+	<section class="py-10">
+		<div class="rounded-3xl border border-gray-200/70 bg-white/70 p-8 shadow-sm backdrop-blur dark:border-white/10 dark:bg-gray-950/50">
+			<div class="grid gap-8 md:grid-cols-12">
+				<div class="md:col-span-5">
+					<h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Message rapide</h2>
+					<p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+						Ce formulaire ouvre ton client email (pas de stockage cote serveur).
+					</p>
+					<ul class="mt-6 space-y-2 text-sm text-gray-700 dark:text-gray-200">
+						<li>- Contexte: secteur, donnees, volume, contraintes</li>
+						<li>- Objectif: KPI, SLA, decisions a accelerer</li>
+						<li>- Timeline: date cible et disponibilite</li>
+					</ul>
+				</div>
+				<div class="md:col-span-7">
+					<form id="contact-form" class="grid gap-4">
+						<label class="grid gap-2">
+							<span class="text-sm font-semibold text-gray-900 dark:text-white">Nom</span>
+							<input
+								name="name"
+								class="h-11 rounded-xl border border-gray-200 bg-white px-4 text-sm text-gray-900 outline-none ring-0 focus:border-blue-500 dark:border-white/10 dark:bg-gray-900 dark:text-white"
+								placeholder="Ton nom"
+								required
+							/>
+						</label>
+						<label class="grid gap-2">
+							<span class="text-sm font-semibold text-gray-900 dark:text-white">Sujet</span>
+							<input
+								name="subject"
+								class="h-11 rounded-xl border border-gray-200 bg-white px-4 text-sm text-gray-900 outline-none ring-0 focus:border-blue-500 dark:border-white/10 dark:bg-gray-900 dark:text-white"
+								placeholder="Ex: Mission data engineering"
+								required
+							/>
+						</label>
+						<label class="grid gap-2">
+							<span class="text-sm font-semibold text-gray-900 dark:text-white">Message</span>
+							<textarea
+								name="message"
+								rows="6"
+								class="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none ring-0 focus:border-blue-500 dark:border-white/10 dark:bg-gray-900 dark:text-white"
+								placeholder="Decris ton besoin, le contexte, et les objectifs."
+								required
+							></textarea>
+						</label>
+						<div class="flex flex-wrap items-center gap-3">
+							<button
+								type="submit"
+								class="inline-flex items-center justify-center rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+							>
+								Ouvrir l email
+							</button>
+							<p class="text-xs text-gray-500 dark:text-gray-400">Destination: {site.email}</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script define:vars={{ to: site.email }}>
+		const form = document.getElementById('contact-form');
+		form?.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const data = new FormData(form);
+			const name = String(data.get('name') ?? '').trim();
+			const subject = String(data.get('subject') ?? '').trim();
+			const message = String(data.get('message') ?? '').trim();
+
+			const body = [`Nom: ${name}`, '', message].join('\n');
+			const href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+			window.location.href = href;
+		});
+	</script>
+</Layout>

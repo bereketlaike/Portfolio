@@ -1,11 +1,142 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../data/site';
+import { projects } from '../data/projects';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const featured = projects.slice(0, 3);
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+	title={`Portfolio Data | ${site.name}`}
+	description="Portfolio data: data engineering, analytics, pipelines, dashboards, automatisation."
+>
+	<section class="py-10 md:py-14">
+		<div class="grid items-start gap-10 md:grid-cols-12">
+			<div class="md:col-span-7">
+				<p class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/70 px-4 py-2 text-xs font-semibold text-gray-700 backdrop-blur dark:border-white/10 dark:bg-gray-950/50 dark:text-gray-200">
+					<span class="h-2 w-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500"></span>
+					{site.role} - {site.location}
+				</p>
+
+				<h1 class="mt-6 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+					<span class="block">{site.headline}</span>
+					<span class="mt-2 block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+						Je construis des produits data fiables, mesurables, et faciles a faire evoluer.
+					</span>
+				</h1>
+
+				<p class="mt-6 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-300">
+					Pipelines ELT/ETL, modelisation analytique, qualite de donnees, observabilite, et BI. Objectif: des
+					decisions plus rapides avec une confiance elevee.
+				</p>
+
+				<div class="mt-8 flex flex-wrap gap-3">
+					<a
+						href="/projects"
+						class="inline-flex items-center justify-center rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+					>
+						Explorer les projets
+					</a>
+					<a
+						href="/about"
+						class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800"
+					>
+						A propos
+					</a>
+					<a
+						href={`mailto:${site.email}`}
+						class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800"
+					>
+						Me contacter
+					</a>
+				</div>
+			</div>
+
+			<div class="md:col-span-5">
+				<div class="rounded-3xl border border-gray-200/70 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-gray-950/50">
+					<h2 class="text-sm font-semibold text-gray-900 dark:text-white">Stack</h2>
+					<div class="mt-4 flex flex-wrap gap-2">
+						{['Python', 'SQL', 'dbt', 'Airflow', 'BigQuery', 'Kafka', 'Spark', 'Docker', 'Git'].map((t) => (
+							<span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-white/10 dark:text-gray-200">
+								{t}
+							</span>
+						))}
+					</div>
+
+					<div class="mt-6 grid gap-3">
+						<div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-gray-900">
+							<p class="text-xs font-semibold text-gray-500 dark:text-gray-400">Focus</p>
+							<p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Qualite, fiabilite, impact.</p>
+						</div>
+						<div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-gray-900">
+							<p class="text-xs font-semibold text-gray-500 dark:text-gray-400">Livraison</p>
+							<p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">Iteration courte + monitoring.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-10">
+		<div class="flex items-end justify-between gap-6">
+			<div>
+				<h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Projets selectionnes</h2>
+				<p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+					Quelques cas representatifs: plateforme ELT, streaming, et dashboards.
+				</p>
+			</div>
+			<a class="text-sm font-semibold text-blue-700 hover:text-blue-800 dark:text-cyan-300 dark:hover:text-cyan-200" href="/projects">
+				Tous les projets ->
+			</a>
+		</div>
+
+		<div class="mt-6 grid gap-5 md:grid-cols-2">
+			{featured.map((project) => <ProjectCard project={project} />)}
+		</div>
+	</section>
+
+	<section class="py-10">
+		<div class="rounded-3xl border border-gray-200/70 bg-white/70 p-8 shadow-sm backdrop-blur dark:border-white/10 dark:bg-gray-950/50">
+			<div class="grid gap-8 md:grid-cols-3">
+				<div>
+					<h3 class="text-sm font-semibold text-gray-900 dark:text-white">Ce que je livre</h3>
+					<ul class="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-200">
+						<li>- Pipelines ELT/ETL (batch + streaming)</li>
+						<li>- Modelisation analytics (marts, semantic layer)</li>
+						<li>- Data quality + tests + documentation</li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="text-sm font-semibold text-gray-900 dark:text-white">Comment je travaille</h3>
+					<ul class="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-200">
+						<li>- Definitions KPI et contrats de donnees</li>
+						<li>- Observabilite (SLA, alerting, freshness)</li>
+						<li>- Focus impact: usage, adoption, ROI</li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="text-sm font-semibold text-gray-900 dark:text-white">On discute</h3>
+					<p class="mt-3 text-sm text-gray-700 dark:text-gray-200">
+						Si tu veux parler data platform, analytics, ou automatisation, ecris-moi.
+					</p>
+					<div class="mt-4 flex flex-wrap gap-3">
+						<a
+							href={`mailto:${site.email}`}
+							class="inline-flex items-center justify-center rounded-full bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+						>
+							Envoyer un email
+						</a>
+						<a
+							href="/contact"
+							class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-50 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800"
+						>
+							Page contact
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </Layout>

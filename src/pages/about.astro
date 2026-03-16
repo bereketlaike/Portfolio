@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+import AProposDeMoi from "../components/AProposDeMoi.astro";
+import { site } from "../data/site";
+---
+
+<Layout title={`A propos | ${site.name}`} description="Presentation, stack, et facon de travailler.">
+	<AProposDeMoi />
+</Layout>
